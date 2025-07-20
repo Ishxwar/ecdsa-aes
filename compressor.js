@@ -63,8 +63,8 @@ if (!inputFilePath || !licensePath) {
 
 const license = JSON.parse(fs.readFileSync("license.lic", "utf-8"));
 const publicKey = `-----BEGIN PUBLIC KEY-----
-MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEurTT2WT7EO76AOo6Dh66UO/mu9a0
-rNqwwl0nRFmgl9/uG+IQJgbYScv3M/5VoYX5H/nyV1k6QZFZtH+fk4qfzQ==
+MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAERMNSNAQbfLgHIzgsjsJ3uDImeVHz
+8BXFkoAoU+kiDNtRqVXzyFVzSocNYDP2bZpZD0R9+fHxTYBhNbRg1cdhgQ==
 -----END PUBLIC KEY-----
 `;
 const aesKey = Buffer.from(process.env.AES_KEY, "base64");
