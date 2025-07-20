@@ -6,14 +6,12 @@ dotenv.config();
 const publicKey = fs.readFileSync("./public.pem", "utf-8");
 const aesKey = Buffer.from(process.env.AES_KEY, "base64");
 
-// Step 1: Read and parse the license file
 const license = JSON.parse(fs.readFileSync("license.lic", "utf-8"));
 
 const iv = Buffer.from(license.iv, "base64");
 const encrypted = license.data;
-const signature = Buffer.from(license.signature.data); // or license.signature directly if already a Buffer
+const signature = Buffer.from(license.signature.data);
 
-// Step 2: Decrypt the data
 const decipher = crypto.createDecipheriv("aes-256-cbc", aesKey, iv);
 let decrypted = decipher.update(encrypted, "base64", "utf-8");
 decrypted += decipher.final("utf-8");
@@ -22,7 +20,6 @@ const licenseBundle = JSON.parse(decrypted);
 const payload = licenseBundle.license.payload;
 const signedData = Buffer.from(JSON.stringify(payload));
 
-// Step 3: Verify the signature
 const isValid = crypto.verify(
   "sha256",
   signedData,

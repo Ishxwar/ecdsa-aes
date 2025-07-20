@@ -4,7 +4,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const privateKey = process.env.PRIVATE_KEY;
-// why buffer from
+
 const aesKey = Buffer.from(process.env.AES_KEY, "base64");
 
 const licensePayload = {

@@ -70,9 +70,9 @@ MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAERMNSNAQbfLgHIzgsjsJ3uDImeVHz
 const aesKey = Buffer.from(process.env.AES_KEY, "base64");
 const iv = Buffer.from(license.iv, "base64");
 const encrypted = license.data;
-const signature = Buffer.from(license.signature.data); // or license.signature directly if already a Buffer
+const signature = Buffer.from(license.signature.data);
 
-// Step 2: Decrypt the data
+//Decrypt
 const decipher = crypto.createDecipheriv("aes-256-cbc", aesKey, iv);
 let decrypted = decipher.update(encrypted, "base64", "utf-8");
 decrypted += decipher.final("utf-8");
@@ -81,7 +81,6 @@ const licenseBundle = JSON.parse(decrypted);
 const payload = licenseBundle.license.payload;
 const signedData = Buffer.from(JSON.stringify(payload));
 
-// Step 3: Verify the signature
 const isValid = crypto.verify(
   "sha256",
   signedData,
