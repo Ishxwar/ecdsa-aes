@@ -63,8 +63,8 @@ if (!inputFilePath || !licensePath) {
 
 const license = JSON.parse(fs.readFileSync("license.lic", "utf-8"));
 const publicKey = `-----BEGIN PUBLIC KEY-----
-MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAERMNSNAQbfLgHIzgsjsJ3uDImeVHz
-8BXFkoAoU+kiDNtRqVXzyFVzSocNYDP2bZpZD0R9+fHxTYBhNbRg1cdhgQ==
+MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEPlAvED2LHDRVXP5JQoJrdq7ij1jX
+Q7Nau4Y0GgtT7rZAQIlU9vRYTeRxkir7079drdlc82mHHcmB+H6HGXpyDA==
 -----END PUBLIC KEY-----
 `;
 const aesKey = Buffer.from(process.env.AES_KEY, "base64");
@@ -80,6 +80,9 @@ decrypted += decipher.final("utf-8");
 const licenseBundle = JSON.parse(decrypted);
 const payload = licenseBundle.license.payload;
 const signedData = Buffer.from(JSON.stringify(payload));
+
+// if(!access[allowed]?.incldues(app{
+// console.error("license not provided for this application")}))
 
 const isValid = crypto.verify(
   "sha256",
@@ -100,7 +103,13 @@ if (now > expiry) {
   process.exit(1);
 }
 
-console.log(isValid ? " License is valid" : " License is invalid");
+if (isValid) {
+  console.log("license is valid");
+} else {
+  console.log("invalid license");
+  process.exit(1);
+}
+// console.log(isValid ? {" License is valid" process.exit(1)} : " License is invalid");
 
 // Parse decrypted payload
 let parsedPayload;
